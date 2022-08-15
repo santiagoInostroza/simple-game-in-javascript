@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        
+        var x = canvas.width/2;
+        var y = canvas.height-30;
+
+        var dx = 1;
+        var dy = -1;
+
+        var ballRadius = 10;
+        var ballColor = "#0095DD";
+
+        function draw() {
+            // ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            drawCircle({ 
+                fillColor : ballColor, 
+                x : x, 
+                y : y, 
+                radius: ballRadius, 
+            });
+           
+            if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+                dx = -dx;
+            }
+            if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+                dy = -dy;
+            }
+
+            changeColor();
+            
+
+            x += dx;
+            y += dy;
+
+
+        }
+        setInterval(draw, 1);
+
+
+        function changeColor() {
+            if (( x + ballRadius ) == canvas.width  || ( y + ballRadius ) == canvas.height || ( x - ballRadius ) == 0 || ( y - ballRadius ) == 0) {
+                // color = Math.floor(Math.random() * 16777215).toString(16);
+                // ballColor = '#' + color;
+                // ballRadius= ballRadius + 0.1;
+                console.log(ballRadius);
+            }
+        }
+
+        function square(data = {}) {
+            color = (data.color) ? data.color : "#00FF00";
+            width = (data.width) ? data.width : 10;
+            height = (data.height) ? data.height : 10;
+            x = (data.x) ? data.x : 10;
+            y = (data.y) ? data.y : 10;
+            fillColor = (data.fillColor) ? data.fillColor : "#00FF00";
+            strokeColor = (data.strokeColor) ? data.strokeColor : "#00FF00";
+
+            ctx.beginPath();
+            ctx.rect(x, y, width, height);
+            ctx.fillStyle = fillColor;
+            ctx.strokeStyle = strokeColor;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawCircle(data = {}) {
+            x = (data.x) ? data.x : 100;
+            y = (data.y) ? data.y : 100;
+            radius = (data.radius) ? data.radius :20;
+            direction = (data.direction) ? data.direction : false;
+
+            fillColor = (data.fillColor) ? data.fillColor : "";
+            strokeColor = (data.strokeColor) ? data.strokeColor : "";
+
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI*2, direction);
+            ctx.strokeStyle = strokeColor;
+            ctx.fillStyle = fillColor;
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath();
+        }
+       
+
+    </script>
+</body>
+</html>
