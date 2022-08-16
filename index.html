@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,10 +8,25 @@
     <style>
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 0 auto; }
+        #x, #y { 
+            width: 40%; 
+            height: 100%;  
+         }
+         div{
+            width: 24%; 
+            margin: 0 auto;
+         }
+         
     </style>
 </head>
 <body>
     <canvas id="myCanvas" width="480" height="320"></canvas>
+    <div>
+        x
+        <input type="number" name="" id="x" step="0.1" value="0">
+        y
+        <input type="number" name="" id="y" step="0.1" value="-1">
+    </div>
     <script>
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
@@ -21,14 +36,17 @@
         var y = canvas.height/2;
 
         //tamaño de la bola
-        var ballRadius = 10;
+        var ballRadius = 6;
 
         //velocidad
-        var speed = 2;
+        var speed = 1;
 
         //direccion de la bola
-        var dx = (speed);
-        var dy = -(speed);
+        var dx = (1 +speed);
+        var dy = -(1 +speed);
+        // var dx = document.getElementById('x').value;
+        // var dy = document.getElementById('y').value;
+        console.log('speeddirection', dx*dy);
 
         var ballColor = "#0095DD";
 
@@ -36,6 +54,7 @@
         var paddleHeight = 10;
         var paddleWidth = 75;
         var paddleX = (canvas.width-paddleWidth)/2;
+        var paddleY = canvas.height-paddleHeight;
 
         var rightPressed = false;
         var leftPressed = false;
@@ -49,6 +68,89 @@
         var brickOffsetTop = 30;
         var brickOffsetLeft = 30;
 
+        var arrayDirection = [
+            [-1,-0.1],
+            [-1,-0.2],
+            [-1,-0.3],
+            [-1,-0.4],
+            [-1,-0.5],
+            [-1,-0.6],
+            [-1,-0.7],
+            [-1,-0.8],
+            [-1,-0.9],
+            [-1,-1],
+            [-0.9,-1],
+            [-0.8,-1],
+            [-0.7,-1],
+            [-0.6,-1],
+            [-0.5,-1],
+            [-0.4,-1],
+            [-0.3,-1],
+            [-0.2,-1],
+            [-0.1,-1],
+            [0,-1],
+            [0.1,-1],
+            [0.2,-1],
+            [0.3,-1],
+            [0.4,-1],
+            [0.5,-1],
+            [0.6,-1],
+            [0.7,-1],
+            [0.8,-1],
+            [0.9,-1],
+            [1,-1],
+            [1,-0.9],
+            [1,-0.8],
+            [1,-0.7],
+            [1,-0.6],
+            [1,-0.5],
+            [1,-0.4],
+            [1,-0.3],
+            [1,-0.2],
+            [1,-0.1],
+            [1,0.1], //se repite para que la bola no quede completamente horizontal
+            [1,0.1],
+            [1,0.2],
+            [1,0.3],
+            [1,0.4],
+            [1,0.5],
+            [1,0.6],
+            [1,0.7],
+            [1,0.8],
+            [1,0.9],
+            [1,1],
+            [0.9,1],
+            [0.8,1],
+            [0.7,1],
+            [0.6,1],
+            [0.5,1],
+            [0.4,1],
+            [0.3,1],
+            [0.2,1],
+            [0.1,1],
+            [0,1],
+            [-0.1,1],
+            [-0.2,1],
+            [-0.3,1],
+            [-0.4,1],
+            [-0.5,1],
+            [-0.6,1],
+            [-0.7,1],
+            [-0.8,1],
+            [-0.9,1],
+            [-1,1],
+            [-1,0.9],
+            [-1,0.8],
+            [-1,0.7],
+            [-1,0.6],
+            [-1,0.5],
+            [-1,0.4],
+            [-1,0.3],
+            [-1,0.2],
+            [-1,0.1],
+            [-1,0.1],//se repite para que la bola no quede completamente horizontal
+        ];
+        
 
         var bricks = [];
         for(c=0; c<brickColumnCount; c++) {
@@ -141,6 +243,7 @@
                 paddleX = (canvas.width-paddleWidth)/2;
             }
         }
+        
         function gameOver() {
             document.location.reload();
             alert("PERDISTE!!");
@@ -211,7 +314,7 @@
 
         function drawPaddle() {
             ctx.beginPath();
-            ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+            ctx.rect(paddleX, paddleY, paddleWidth, paddleHeight);
             ctx.fillStyle = "#0095DD";
             ctx.fill();
             ctx.closePath();
@@ -221,6 +324,14 @@
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // console.log(x,y);
+            // if(x >= 460 || x <= 16) {
+            //     x = 0
+            // }
+            // if(y<=16 || y>=460) {
+            //     y=360
+            // }
+            
 
             drawBricks();
 
@@ -248,7 +359,22 @@
                 changeDirectionY()
             }else if(y + dy > canvas.height-ballRadius) {
                 if(x > paddleX && x < paddleX + paddleWidth) {
-                    dy = -dy;
+                    dx = arrayDirection[Math.floor((x- paddleX)*40/paddleWidth)][0];
+                    dy = arrayDirection[Math.floor((x- paddleX)*40/paddleWidth)][1];
+                    if(dx < 0) {
+                        dx -= speed;
+                    }
+                    else {
+                        dx += speed;
+                    }
+                    if(dy < 0) {
+                        dy -= speed;
+                    }
+                    else {
+                        dy += speed;
+                    }
+                    document.getElementById('x').value =dx;
+                    document.getElementById('y').value = dy;
                 }
                 else {
                     loseLive();
@@ -258,8 +384,6 @@
             if (( x + ballRadius ) == canvas.width  || ( y + ballRadius ) == canvas.height || ( x - ballRadius ) == 0 || ( y - ballRadius ) == 0) {
                 randomColor();
             }
-
-
             if(rightPressed && paddleX < canvas.width-paddleWidth) {
                 paddleX += ballRadius;
             }
