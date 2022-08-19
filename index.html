@@ -22,10 +22,9 @@
 <body>
     <canvas id="myCanvas" width="480" height="320"></canvas>
     <div>
-        x
-        <input type="number" name="" id="x" step="0.1" value="0">
-        y
-        <input type="number" name="" id="y" step="0.1" value="-1">
+        velocidad
+        <input type="number" name="" min="-0.5" id="speed" step="0.1" value="1">
+  
     </div>
     <script>
         var canvas = document.getElementById("myCanvas");
@@ -36,9 +35,9 @@
         var y = canvas.height/2;
 
         //tamaño de la bola
-        var ballRadius = 6;
+        var ballRadius = 5;
 
-        var ballColor = "#0095DD";
+        var ballColor = "red";
 
         //Pala
         var paddleHeight = 10;
@@ -140,8 +139,50 @@
             [-1,0.1],
             [-1,0.1],//se repite para que la bola no quede completamente horizontal
         ];
-
-        var arrayDirectionBottom = [
+        var arrayDirectionBottomY = [
+            [-2,0], // a
+            [-1.997,-0.1], //b
+            [-1.990,-0.2], //c
+            [-1.977,-0.3], //d
+            [-1.959,-0.4], //e
+            [-1.936,-0.5], //f
+            [-1.908,-0.6], //g
+            [-1.873,-0.7], //h
+            [-1.833,-0.8], //i
+            [-1.789,-0.9], //j
+            [-1.732,-1], //k
+            [-1.67,-1.1], //l
+            [-1.60,-1.2], //m
+            [-1.52,-1.3], //n
+            [-1.43,-1.4], //o
+            [-1.33,-1.5], //p
+            [-1.21,-1.6], //q
+            [-1.05,-1.7], //r
+            [-0.88,-1.8], //s
+            [-0.61,-1.9], //t
+            [0,-2], //u
+            [0.61,-1.9], //v
+            [0.88,-1.8], //w
+            [1.05,-1.7], //x
+            [1.21,-1.6], //y
+            [1.33,-1.5], //z
+            [1.43,-1.4], //a
+            [1.52,-1.3], //b
+            [1.60,-1.2], //c
+            [1.67,-1.1], //d
+            [1.732,-1], //e
+            [1.789,-0.9], //f
+            [1.833,-0.8], //g
+            [1.873,-0.7], //h
+            [1.908,-0.6], //i
+            [1.936,-0.5], //j
+            [1.959,-0.4], //k
+            [1.977,-0.3], //l
+            [1.990,-0.2], //m
+            [1.997,-0.1], //n
+            [2,0], //o
+        ];
+        var arrayDirectionBottom2 = [
             [-2,0],//
             [-1.95,0.05],
             [-1.9,0.1],
@@ -224,8 +265,6 @@
             [1.95,0.05],
             [2,0],//
         ]
-
-       
         var arrayDirectionLeft = [
                 [0,-2],
                 [0.05,-1.95],
@@ -309,7 +348,6 @@
                 [0.05,1.95],
                 [0,2],
         ];
-
         var arrayDirectionRight = [
             [0,2],
             [-0.05,1.95],
@@ -393,7 +431,6 @@
             [-0.05,-1.95],
             [0,-2],
         ];
- 
         var arrayDirectionTop = [
             // [-1.95,-0.05],
             // [-1.9,-0.1],
@@ -476,12 +513,98 @@
             // [1.95,-0.05],
         ];
 
-        //velocidad
-        var speed = 2;
-        //direccion de la bola
-        var direction = Math.floor(Math.random() * (40 - 20 + 1)) + 20;
-        var dx = (arrayDirectionTop[direction][0] );
-        var dy = (arrayDirectionTop[direction][1] );
+
+        var arrayDirectionBottom = [
+            //[-2,0], //a
+            [-1.95,-0.45], //b
+            [-1.9,-0.62], //c
+            [-1.85,-0.76], //d
+            [-1.8,-0.87], //e
+            [-1.75,-0.97], //f
+            [-1.7,-1.05], //g
+            [-1.65,-1.13], //h
+            [-1.6,-1.2], //i
+            [-1.55,-1.27], //j
+            [-1.5,-1.33], //k
+            [-1.45,-1.38], //l
+            [-1.4,-1.43], //m
+            [-1.35,-1.48], //n
+            [-1.3,-1.52], //o
+            [-1.25,-1.56], //p
+            [-1.2,-1.6], //q
+            [-1.15,-1.64], //r
+            [-1.1,-1.67], //s
+            [-1.05,-1.7], //t
+            [-1,-1.73], //u
+            [-0.95,-1.76], //v
+            [-0.9,-1.78], //w
+            [-0.85,-1.81], //x
+            [-0.8,-1.83], //y
+            [-0.75,-1.85], //z
+            [-0.7,-1.87], //a
+            [-0.65,-1.89], //b
+            [-0.6,-1.91], //c
+            [-0.55,-1.92], //d
+            [-0.5,-1.94], //e
+            [-0.45,-1.95], //f
+            [-0.4,-1.96], //g
+            [-0.35,-1.97], //h
+            [-0.3,-1.98], //i
+            [-0.25,-1.98], //j
+            [-0.2,-1.99], //k
+            [-0.15,-1.99], //l
+            [-0.1,-1.99], //m
+            [-0.05,-1.99], //n
+            [0,-2], //o
+            [0.05,-1.99], //p
+            [0.1,-1.99], //q
+            [0.15,-1.99], //r
+            [0.2,-1.99], //s
+            [0.25,-1.98], //t
+            [0.3,-1.98], //u
+            [0.35,-1.97], //v
+            [0.4,-1.96], //w
+            [0.45,-1.95], //x
+            [0.5,-1.94], //y
+            [0.55,-1.92], //z
+            [0.6,-1.91], //a
+            [0.65,-1.89], //b
+            [0.7,-1.87], //c
+            [0.75,-1.85], //d
+            [0.8,-1.83], //e
+            [0.85,-1.81], //f
+            [0.9,-1.78], //g
+            [0.95,-1.76], //h
+            [1,-1.73], //i
+            [1.05,-1.7], //j
+            [1.1,-1.67], //k
+            [1.15,-1.64], //l
+            [1.2,-1.6], //m
+            [1.25,-1.56], //n
+            [1.3,-1.52], //o
+            [1.35,-1.48], //p
+            [1.4,-1.43], //q
+            [1.45,-1.38], //r
+            [1.5,-1.33], //s
+            [1.55,-1.27], //t
+            [1.6,-1.2], //u
+            [1.65,-1.13], //v
+            [1.7,-1.05], //w
+            [1.75,-0.97], //x
+            [1.8,-0.87], //y
+            [1.85,-0.76], //z
+            [1.9,-0.62], //a
+            [1.95,-0.45], //b
+            //[2,0], //c
+        ];
+
+        var pause = true;
+        var speed = 1;
+        var score = 0;
+        var lives = 3;
+        var direction = Math.floor(Math.random() * arrayDirectionBottom.length) + 1;
+        var dx = (arrayDirectionBottom[direction][0] );
+        var dy = (arrayDirectionBottom[direction][1] );
 
         if(dx < 0) {
             dx -= speed;
@@ -495,25 +618,39 @@
         else {
             dy += speed;
         }
-
-        // var dx = document.getElementById('x').value;
-        // var dy = document.getElementById('y').value;
-        
         
         var bricks = [];
         for(c=0; c<brickColumnCount; c++) {
             bricks[c] = [];
             for(r=0; r<brickRowCount; r++) {
-                bricks[c][r] = { x: 0, y: 0, status: 1 };
+                bricks[c][r] = {
+                    x: 0,
+                    y: 0, 
+                    status: 1,
+                    number: c+ '-' +r
+                };
             }
         }
-
-        var score = 0;
-        var lives = 3;
 
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
         document.addEventListener("mousemove", mouseMoveHandler, false);   
+        canvas.addEventListener("mouseup", mouseUpHandler, false);  
+        canvas.addEventListener("mousedown", mouseDownHandler, false); 
+
+        // document.addEventListener("touchmove", touchMoveHandler, false);
+        // document.addEventListener("touchstart", touchStartHandler, false);
+        // document.addEventListener("touchend", touchEndHandler, false);
+        // document.addEventListener("touchcancel", touchCancelHandler, false);
+        // document.addEventListener("touchleave", touchLeaveHandler, false);
+        
+
+        function startGame() {
+            requestAnimationFrame(draw);
+        }
+
+        function mouseDownHandler(e) {
+        }
         
         function mouseMoveHandler(e) {
             var relativeX = e.clientX - canvas.offsetLeft;
@@ -522,7 +659,18 @@
             }
         }
 
+        function mouseUpHandler(e) {
+            if(e.button == 0 && pause == true) {
+                pause = false;
+                startGame();
+            }
+            if (e.button == 1) {
+                pause = true;
+            } 
+        }
+
         function keyDownHandler(e) {
+            pause = false;
             if(e.keyCode == 39) {
                 rightPressed = true;
             }
@@ -532,6 +680,7 @@
         }
 
         function keyUpHandler(e) {
+            pause = false;
             if(e.keyCode == 39) {
                 rightPressed = false;
             }
@@ -544,11 +693,14 @@
             for(c=0; c<brickColumnCount; c++) {
                 for(r=0; r<brickRowCount; r++) {
                     var b = bricks[c][r];
-                    if(b.status == 1) {
-                        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
-                            dy = -dy;
+                    if(b.status == 1) {           
+                        [newX,newY] = getPointsOfCollision(x,y,ballRadius,speed,dx,dy)      
+                        if( newX  > b.x && newX < b.x+brickWidth && newY > b.y && newY < b.y+brickHeight) {
                             b.status = 0;
                             score++;
+                            changeDirection(newX,newY,dx,dy,b.x,b.y,brickWidth,brickHeight)                     
+                            // pause = true;
+                            // return false;
                             if(score == brickRowCount*brickColumnCount) {
                                 win();
                             }
@@ -556,6 +708,65 @@
                     }
                 }
             }
+        }
+
+
+        function changeDirection(ballX,ballY,ballDx,ballDy,objectX,objectY,objectWidth,objectHeight) {
+            if(ballDy < 0 && ballDx > 0){ //quiere decir que la bola golpeo desde abajo hacia arriba y desde izquierda a derecha
+                if( (ballX - objectX) > (objectY + objectHeight - ballY) ){ //golpeo desde abajo hacia arriba
+                    ballDy = -ballDy
+                    //  console.log('golpeo desde abajo hacia arriba')
+                }else{ //golpeo desde izquierda a derecha
+                    ballDx = -ballDx
+                    //  console.log('golpeo desde izquierda a derecha')
+                }
+            } else if (ballDy < 0 && ballDx < 0 ) { //quiere decir que la bola golpeo desde abajo hacia arriba y desde derecha a izquierda
+                if( (objectX + objectWidth - ballX  ) > ( objectY + objectHeight - ballY) ){ //golpeo desde abajo hacia arriba
+                    ballDy = -ballDy
+                    //  console.log('golpeo desde abajo hacia arriba')
+                }else { //golpeo desde derecha a izquierda
+                    ballDx = -ballDx
+                    //  console.log('golpeo desde derecha a izquierda')
+                }
+            } else if ( ballDy > 0 && ballDx > 0 ){ //quiere decir que la bola golpeo desde arriba hacia abajo y desde izquierda a derecha
+                if ( (ballX - objectX) > (ballY - objectY) ){ //golpeo desde arriba hacia abajo
+                    ballDy = -ballDy
+                    //  console.log('golpeo desde arriba hacia abajo')
+                } else { //golpeo desde izquierda a derecha
+                    ballDx = -ballDx
+                    //  console.log('golpeo desde izquierda a derecha')
+                }
+            } else if ( ballDy > 0 && ballDx < 0 ) { //quiere decir que la bola golpeo desde arriba hacia abajo y desde derecha a izquierda
+                if( (objectX + objectWidth - ballX) > (ballY - objectY) ){ //golpeo desde arriba hacia abajo
+                    ballDy = -ballDy
+                    //  console.log('golpeo desde arriba hacia abajo')
+                }else{ //golpeo desde derecha a izquierda
+                    ballDx = -ballDx
+                    //  console.log('golpeo desde derecha a izquierda')
+                }
+            }
+
+            dx= ballDx;
+            dy= ballDy;
+
+            // console.log('cuanto entro x', newX - b.x);
+            // console.log('cuanto entro y',   b.y + brickHeight - newY  );
+        }
+
+        function getPointsOfCollision(x,y,ballRadius,speed,dx,dy) {
+            if (dy>0){ //down
+               newY = y - speed +  ballRadius + dy;
+            }
+            else { //up
+               newY = y + speed - ballRadius - (-dy);
+            }
+            if (dx>0){ //right
+               newX = x - speed + dx + ballRadius;
+            }
+            else { //left
+               newX = x + speed - (-dx) - ballRadius;
+            }
+            return [newX, newY];
         }
 
         function drawScore() {
@@ -580,6 +791,7 @@
 
         function loseLive() {
             lives--;
+            
             if(!lives) {
                 gameOver();
             }
@@ -589,6 +801,7 @@
                 dx = 2;
                 dy = -2;
                 paddleX = (canvas.width-paddleWidth)/2;
+                pause = true;
             }
         }
         
@@ -598,8 +811,11 @@
         }
 
         function win() {
-            document.location.reload();
-            alert("GANASTE");
+            setTimeout(function() {
+                document.location.reload();
+                alert("GANASTE!!");
+            }, 20);
+            
         }
 
         function randomColor() {
@@ -671,18 +887,9 @@
         
 
         function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            // console.log(x,y);
-            // if(x >= 460 || x <= 16) {
-            //     x = 0
-            // }
-            // if(y<=16 || y>=460) {
-            //     y=360
-            // }
-            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);           
 
             drawBricks();
-
             drawCircle({ 
                 fillColor : ballColor,
                 strokeColor : 'white', 
@@ -690,15 +897,12 @@
                 y : y, 
                 radius: ballRadius, 
             });
-           
             drawPaddle();
-
             drawScore();
-
             drawLives();
-
             collisionDetection();
 
+           
             if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
                 changeDirectionX()
             }
@@ -707,11 +911,9 @@
                 changeDirectionY()
             }else if(y + dy > canvas.height-ballRadius) {
                 if(x > paddleX && x < paddleX + paddleWidth) {
-                    golpe = Math.floor((x - paddleX)*60/paddleWidth);
-                    dx = arrayDirectionTop[golpe][0];
-                    dy = arrayDirectionTop[golpe][1];
-                   document.getElementById('x').value = dx;
-                    document.getElementById('y').value = dy;
+                    golpe = Math.floor((x - paddleX) * arrayDirectionBottom.length/paddleWidth);
+                    dx = arrayDirectionBottom[golpe][0];
+                    dy = arrayDirectionBottom[golpe][1];
                     if(dx < 0) {
                         dx -= speed;
                     }
@@ -724,31 +926,31 @@
                     else {
                         dy += speed;
                     }
-                   
                 }
                 else {
                     loseLive();
                 }
             }
          
-            if (( x + ballRadius ) == canvas.width  || ( y + ballRadius ) == canvas.height || ( x - ballRadius ) == 0 || ( y - ballRadius ) == 0) {
-                randomColor();
-            }
+            // if (( x + ballRadius ) == canvas.width  || ( y + ballRadius ) == canvas.height || ( x - ballRadius ) == 0 || ( y - ballRadius ) == 0) {
+            //     randomColor();
+            // }
+
             if(rightPressed && paddleX < canvas.width-paddleWidth) {
-                paddleX += ballRadius;
+                paddleX += 7;
             }
             else if(leftPressed && paddleX > 0) {
-                paddleX -= ballRadius;
+                paddleX -= 7;
             }
             
             x += dx;
             y += dy;
 
-            requestAnimationFrame(draw);
 
+            if(!pause) {
+                requestAnimationFrame(draw);
+            }
         }
-
-        // setInterval(draw, 10);
         draw();
 
     </script>
